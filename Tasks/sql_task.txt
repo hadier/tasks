@@ -1,0 +1,48 @@
+/*create a database*/
+     
+CREATE DATABASE testdata;
+
+/*create a table "People" and insert elemets into it*/
+
+ 
+     CREATE TABLE People (PersonID int, LastName varchar(255), FirstName varchar(255));
+     INSERT INTO People (PersonID, LastName, FirstName) VALUES (1, 'Tom', 'Müller');
+     INSERT INTO People (PersonID, LastName, FirstName) VALUES (2, 'Steven', 'Green');
+     INSERT INTO People (PersonID, LastName, FirstName) VALUES (3, 'Alex', 'John');
+ 
+/*create a table "Patient" and insert elemets into it*/
+
+ 
+    CREATE TABLE Patient (PersonID int, LastName varchar(255), FirstName varchar(255) ,City varchar(255));
+    INSERT INTO Patient (PersonID, LastName, FirstName, City) VALUES (1, 'Tom', 'Müller', 'Berlin');
+    INSERT INTO Patient (PersonID, LastName, FirstName, City) VALUES (2, 'Steven', 'Green', 'Stuttgart');
+    INSERT INTO Patient (PersonID, LastName, FirstName, City) VALUES (3, 'Alex', 'John', 'Bonn');
+     
+/*create a table "PatientInvoices" and insert elemets into it*/
+  CREATE TABLE PatientInvoices (PersonID int, Payment int);
+  INSERT INTO PatientInvoices (PersonID, Payment) VALUES (1, '100');
+  INSERT INTO PatientInvoices (PersonID, Payment) VALUES (2, '200');
+  INSERT INTO PatientInvoices (PersonID, Payment) VALUES (3, '230');
+
+
+/*simple statements: Select from one table*/
+
+ SELECT FirstName FROM People where PersonID = 1;
+ SELECT PersonID FROM Patient where City = 'Stuttgart';
+ SELECT PersonID FROM PatientInvoices WHERE Payment > 100;
+
+/* complex items from fewer tables*/
+
+SELECT FirstName FROM People UNION SELECT FirstName FROM Patient;
+SELECT People.LastName, PatientInvoices.Payment FROM People, PatientInvoices WHERE People.PersonID = PatientInvoices.PersonID;
+SELECT People.LastName, Patient.City, PatientInvoices.Payment FROM People, Patient, PatientInvoices WHERE People.PersonID = Patient.PersonID = PatientInvoices.PersonID;
+SELECT People.LastName, Patient.City, PatientInvoices.Payment FROM People JOIN Patient JOIN PatientInvoices ON People.PersonID = Patient.PersonID = PatientInvoices.PersonID;
+
+
+/*Count rows for any table*/
+
+SELECT COUNT(*) FROM People;
+SELECT COUNT(*) FROM Patient;
+SELECT COUNT(*) FROM PatientInvoices;
+
+
